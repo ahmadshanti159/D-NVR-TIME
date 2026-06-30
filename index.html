@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" >
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
   <title>تحويل الساعة بين DVR والواقع - ثيم غامق</title>
@@ -25,7 +25,7 @@
     }
 
     .header img {
-      height: 50px;
+      height: 70px;
       filter: brightness(1.2) contrast(1.1);
     }
 
@@ -52,6 +52,7 @@
       font-weight: bold;
       font-size: 20px;
       color: #eee;
+      line-height: 1.8;
     }
 
     .result .highlight {
@@ -66,25 +67,19 @@
 
     .watermark {
       position: fixed;
-      top: 0;
+      top: 30%;
       left: 50%;
       transform: translateX(-50%);
       z-index: 0;
       pointer-events: none;
       user-select: none;
-      color: rgba(255, 255, 255, 0.07);
+      color: rgba(255, 255, 255, 0.05);
       font-weight: 900;
-      font-size: 60px;
-      line-height: 100px;
+      font-size: 70px;
       text-align: center;
       white-space: nowrap;
-      letter-spacing: 4px;
-      text-transform: lowercase;
+      letter-spacing: 2px;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .watermark span {
-      display: block;
     }
 
     .content {
@@ -93,27 +88,18 @@
       max-width: 450px;
       margin: 0 auto;
     }
-
-    .footer {
-      margin-top: 40px;
-      font-size: 18px;
-      color: #888;
-      font-weight: bold;
-      display: none;
-    }
   </style>
 </head>
 <body>
 
-  <!-- الشعار العلوي -->
+  <!-- الشعار العلوي (شعار السلطة الفلسطينية) -->
   <div class="header">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Palestinian_Police_Logo.png/240px-Palestinian_Police_Logo.png" alt="شعار الشرطة الفلسطينية">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Emblem_of_Palestine.svg" alt="شعار السلطة الوطنية الفلسطينية">
   </div>
 
   <!-- العلامة المائية -->
   <div class="watermark" aria-hidden="true">
-    <span>ahmad shanti</span>
-    <span>ahmad shanti</span>
+    <span>السلطة الفلسطينية</span>
   </div>
 
   <div class="content" role="main">
@@ -125,37 +111,42 @@
     <label for="realTargetTime">⏱️ أدخل الساعة الحقيقية التي تريد الرجوع لها:</label><br>
     <input type="time" id="realTargetTime" aria-required="true"><br>
 
-    <button onclick="eval(_xsh)">احسب الساعة على الـDVR</button>
+    <button onclick="calculateDVRTime()">احسب الساعة على الـDVR</button>
 
     <div class="result" id="output" aria-live="polite" aria-atomic="true"></div>
 
-    <div class="footer" id="footer"> أحمد شنطي</div>
   </div>
 
   <script>
-    const _xsh = `(function(){
+    function calculateDVRTime() {
       const dvrInput = document.getElementById("dvrTime").value;
       const targetRealInput = document.getElementById("realTargetTime").value;
+      
       if (!dvrInput || !targetRealInput) {
         alert("الرجاء إدخال كل الساعات");
         return;
       }
+      
       const [dvrH, dvrM] = dvrInput.split(":").map(Number);
       const [targetH, targetM] = targetRealInput.split(":").map(Number);
+      
       const now = new Date();
       const realNow = new Date(now);
       const dvrNow = new Date(now);
+      
       dvrNow.setHours(dvrH, dvrM, 0, 0);
       const offsetMs = dvrNow.getTime() - realNow.getTime();
+      
       const targetReal = new Date(now);
       targetReal.setHours(targetH, targetM, 0, 0);
+      
       const targetDvrTime = new Date(targetReal.getTime() + offsetMs);
+      
       document.getElementById("output").innerHTML = 
         "✅ إذا أردت الرجوع إلى الساعة <strong class='time-real'>" + targetReal.toLocaleTimeString() + "</strong> (الواقعية)<br>" +
         "⏩ فابحث عنها في الـDVR على الساعة: <span class='highlight'>" + targetDvrTime.toLocaleTimeString() + "</span><br><br>" +
         "📏 فرق التوقيت الحالي بين DVR وجهازك: <strong>" + Math.round(offsetMs/60000) + " دقيقة</strong>";
-      document.getElementById("footer").style.display = 'block';
-    })();`;
+    }
   </script>
 </body>
 </html>
