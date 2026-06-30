@@ -17,16 +17,15 @@
     }
 
     .header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
       margin-bottom: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .header img {
-      height: 70px;
-      filter: brightness(1.2) contrast(1.1);
+      height: 120px; /* يمكنك تعديل هذا الرقم لتكبير أو تصغير الشعار */
+      filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
     }
 
     input, button {
@@ -87,19 +86,28 @@
       z-index: 1;
       max-width: 450px;
       margin: 0 auto;
+      background: rgba(30, 30, 30, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
 
-  <!-- الشعار العلوي (شعار السلطة الفلسطينية) -->
+  <!-- الشعار العلوي -->
   <div class="header">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Emblem_of_Palestine.svg" alt="شعار السلطة الوطنية الفلسطينية">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Emblem_of_Palestine.svg" alt="شعار السلطة الفلسطينية">
   </div>
 
   <!-- العلامة المائية -->
   <div class="watermark" aria-hidden="true">
-    <span>السلطة الفلسطينية</span>
+    <span></span>
   </div>
 
   <div class="content" role="main">
